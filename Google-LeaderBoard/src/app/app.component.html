@@ -1,0 +1,89 @@
+<div class="leaderboard-container font-googleSans">
+<div *ngIf="loading; else content">
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+  </div>
+</div>
+
+<ng-template #content>
+
+
+  <div class="highlighted-entries">
+    <img src="Google-Pay-banner 1.png" alt="Google Pay Banner" class="banner-img" />
+    <div class="highlighted-entries-wrapper">
+      <div *ngFor="let entry of tableData.slice(0, 3); let index = index" class="highlighted-entry" [ngStyle]="{
+        'order': index === 0 ? 2 : index === 1 ? 1 : 3,
+        'transform': index === 0 ? 'translateY(-40px)' : ''
+      }" class="highlighted-entry">
+        <div class="highlighted-entry-rank">
+          <div>{{ index === 0 ? '1st' : index === 1 ? '2nd' : '3rd' }}</div>
+        </div>
+        <div class="highlighted-entry-content">
+          <div class="territory-id">{{ entry.territory_id }}</div>
+          <div class="highlighted-points">
+            <img src="icon 2.png" alt="" class="points-icon" />
+            <div>{{ entry.total_points }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="filteredEntry; else noEntry">
+      <div class="param-entry-container">
+        <div class="param-entry-header">
+          <div class="param-entry-rank">
+            <div class="param-rank-text">
+              {{ filteredEntry.ranking+1 + getOrdinalSuffix(filteredEntry.ranking+1) }}
+            </div>
+          </div>
+          <div class="param-entry-details">
+            <div class="param-territory-id">
+              {{ filteredEntry.territory_id }}
+            </div>
+            <div class="param-points-container">
+              <img src="icon 2.png" alt="Points Icon" class="param-points-icon" />
+              <div class="param-points-text">
+                {{ filteredEntry.total_points }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noEntry>
+      <div class="param-no-entry-message">
+        You haven't made it to the leaderboard yet.
+      </div>
+    </ng-template>
+
+
+  </div>
+
+  <main class="font-googleSans table-container">
+    <div class="table-wrapper">
+      <table class="leaderboard-table">
+        <thead>
+          <tr class="tabel-entry">
+            <th class="table-header">Rank</th>
+            <th class="table-header">Territory ID</th>
+            <th class="table-header">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tableData" class="table-row table-entr">
+            <td class="table-cell">{{item.ranking + getOrdinalSuffix(item.ranking)}}</td>
+            <td class="table-cell">{{item.territory_id}}</td>
+            <td class="table-cell">
+              <div class="points">
+                <img src="icon 2.png" alt="" class="points-icon" />
+                <div>{{item.total_points}}</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</ng-template>
+
+</div>
